@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+public/img
+public/og.png
+src/lib/images.generated.ts
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store

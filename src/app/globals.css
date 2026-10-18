@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+/* Design tokens (Tailwind v4 keeps its config in CSS). */
+@theme {
+  --color-bg: #f6f7f4;
+  --color-card: #ffffff;
+  --color-ink: #0f1512;
+  --color-body: #525a55;
+  --color-brand: #1a8f3c;
+  /* Fill behind white text: #1A8F3C is 4.17:1 with white (fails AA for <18px text); this is 4.6:1. */
+  --color-brand-fill: #18863a;
+  --color-brand-hover: #157532;
+  --color-brand-tint: #e6f3ea;
+  --color-well: #f1f3ef;
+  --color-placeholder: #e9ece7;
+  --color-footer: #0a0a0a;
+  --color-footer-text: #c0c0c0;
+  --color-footer-muted: #9a9a9a;
+  --color-footer-accent: #2ecc71;
+  --color-hairline: rgb(15 21 18 / 0.05);
+  --color-line: rgb(15 21 18 / 0.12);
+  --color-whatsapp: #25d366;
+  --color-instagram: #e1306c;
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  --tracking-display: -0.045em;
+  --leading-display: 1.02;
+
+  --radius-btn: 12px;
+  --radius-well: 20px;
+  --radius-card: 28px;
+  --radius-panel: 36px;
+
+  --shadow-card: 0 1px 2px rgb(15 21 18 / 0.03);
+  --shadow-card-hover: 0 24px 48px rgb(15 21 18 / 0.08);
+  --shadow-pop: 0 24px 48px rgb(15 21 18 / 0.12);
+  --shadow-header: 0 8px 30px rgb(15 21 18 / 0.05);
+
+  /* Desktop nav breakpoint */
+  --breakpoint-nav: 60rem;
+
+  /* Fluid type */
+  --text-hero: clamp(2.5rem, 7vw, 6rem);
+  --text-h2: clamp(2rem, 4.4vw, 3.5rem);
+  --text-h2-lg: clamp(2.125rem, 5vw, 4rem);
+  --text-page: clamp(2.625rem, 6.4vw, 5rem);
+  --text-lead: clamp(1rem, 1.6vw, 1.1875rem);
+
+  --animate-pop: pop 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.96) translateY(-4px); }
+    to { transform: none; }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-bg font-sans text-ink;
+    font-optical-sizing: auto;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  :focus-visible {
+    outline: 3px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .on-dark :focus-visible { outline-color: var(--color-footer-accent); }
+}
+
+@layer components {
+  .display {
+    font-weight: 300;
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-display);
+  }
+  .accent {
+    font-weight: 700;
+    color: var(--color-brand);
+  }
+  .ground-shadow {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: 5%;
+    height: 14%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgb(15 21 18 / 0.32), rgb(15 21 18 / 0) 70%);
+    filter: blur(10px);
+    pointer-events: none;
+  }
+}
+
+/* Subtle slide-up on scroll. Pure CSS: no JS, no layout shift, ignored where unsupported. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+@keyframes reveal {
+  /* Transform only (no fade) so text keeps full contrast mid-animation. */
+  from { transform: translateY(32px); }
+  to { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
