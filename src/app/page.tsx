@@ -2,7 +2,6 @@ import BookNow from "@/components/BookNow";
 import CarFigure from "@/components/CarFigure";
 import FleetSection from "@/components/FleetSection";
 import Img from "@/components/Img";
-import LocationsSection from "@/components/LocationsSection";
 import AboutSection from "@/components/AboutSection";
 import { links } from "@/content";
 
@@ -65,8 +64,6 @@ export default function Home() {
           />
         </div>
       </section>
-
-      <LocationsSection />
 
       <AboutSection />
 

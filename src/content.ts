@@ -19,8 +19,6 @@ export const messages = {
   general: "Hi LAD Car Rentals! I'd like to rent a car.",
   car: (car: string) =>
     `Hi LAD Car Rentals! I'm interested in the ${car}. My pickup location: ___ Dates: ___`,
-  pickup: (city: string) =>
-    `Hi LAD Car Rentals! I'd like to arrange a pickup in ${city}. Dates: ___ Car: ___`,
 };
 
 export const links = {
@@ -34,7 +32,6 @@ export const links = {
 export const nav = [
   { id: "home", label: "Home" },
   { id: "fleet", label: "Our Fleet" },
-  { id: "locations", label: "Locations" },
   { id: "about", label: "About Us" },
 ];
 
@@ -73,8 +70,8 @@ export function carGroup(type: CarType): Exclude<FleetFilter, "All"> {
   return type === "SUV" ? "SUVs" : "Cars";
 }
 
-// Add `image: "<name>"` (a PNG in assets-src/) to replace a placeholder with a photo.
-export const locations: { city: string; parish: string; image?: ImageName }[] = [
+// Areas served: used only in the search-engine structured data (JSON-LD).
+export const locations = [
   { city: "Montego Bay", parish: "St. James" },
   { city: "Kingston", parish: "Kingston & St. Andrew" },
   { city: "Ocho Rios", parish: "St. Ann" },
