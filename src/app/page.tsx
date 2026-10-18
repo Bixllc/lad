@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section id="home" aria-label="Introduction" className="relative scroll-mt-28 bg-[radial-gradient(ellipse_75%_65%_at_50%_62%,#E6E9E5_0%,#F6F7F4_72%)]">
+      <section id="home" aria-label="Introduction" className="relative scroll-mt-28 bg-[radial-gradient(ellipse_75%_50%_at_50%_62%,#E6E9E5_0%,#F6F7F4_72%)]">
         <div className="mx-auto flex max-w-[1280px] flex-col items-center px-5 pt-[clamp(56px,9vw,120px)] pb-[clamp(40px,5vw,64px)] text-center">
           <h1 className="display text-hero">
             Reliable Cars at
@@ -60,7 +60,7 @@ export default function Home() {
             name="why-hyundai-grey"
             alt="Grey Hyundai Tucson with an LAD Car Rentals plate"
             sizes="(min-width: 960px) 720px, 110vw"
-            shadow="strong"
+            shadow="grounded"
             className="reveal -mr-[18%] w-[118%]"
           />
         </div>

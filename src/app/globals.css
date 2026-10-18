@@ -87,29 +87,27 @@
   .anchor {
     scroll-margin-top: calc(8rem - clamp(88px, 11vw, 152px));
   }
-  /* Stronger two-layer shadow (wide soft pool + darker contact line under the tyres),
-     matching the weight of the hero car's floor shadow. */
-  .ground-shadow-strong {
+  /* Soft grey "floor" behind a grounded car, the same gradient as the hero section. */
+  .floor-glow {
     position: absolute;
-    left: 4%;
-    right: 2%;
-    bottom: -7%;
-    height: 22%;
-    border-radius: 50%;
-    background: radial-gradient(ellipse at center, rgb(15 21 18 / 0.38), rgb(15 21 18 / 0) 70%);
-    filter: blur(12px);
+    left: -12%;
+    right: -12%;
+    top: 0;
+    bottom: -22%;
+    background: radial-gradient(ellipse 60% 40% at 50% 62%, #e6e9e5 0%, rgb(246 247 244 / 0) 72%);
     pointer-events: none;
   }
-  .ground-shadow-strong::after {
-    content: "";
+  /* Darker contact shadow where the tyres meet the ground. */
+  .contact-shadow {
     position: absolute;
-    left: 8%;
-    right: 6%;
-    top: 34%;
-    height: 26%;
+    left: 6%;
+    right: 3%;
+    bottom: -1%;
+    height: 7%;
     border-radius: 50%;
-    background: radial-gradient(ellipse at center, rgb(15 21 18 / 0.55), rgb(15 21 18 / 0) 72%);
+    background: radial-gradient(ellipse at center, rgb(15 21 18 / 0.45), rgb(15 21 18 / 0) 70%);
     filter: blur(6px);
+    pointer-events: none;
   }
   .ground-shadow {
     position: absolute;
