@@ -87,6 +87,9 @@ async function blendStudioBackground(file) {
     let a = 1;
     if (bg[p]) {
       a = 1 - Math.min(1, (lum(i) * 1.05) / 255); // 1.05 = the design's brightness(1.05)
+      // Keep only the floor: fade the studio wall above it to fully transparent (no grey haze).
+      const t = Math.max(0, Math.min(1, (y / h - 0.55) / 0.2));
+      a *= t * t * (3 - 2 * t);
       data[i] = data[i + 1] = data[i + 2] = 0;
     }
     a *= ramp(y / h, 0.12) * ramp(x / w, 0.06) * ramp((w - 1 - x) / w, 0.06);
