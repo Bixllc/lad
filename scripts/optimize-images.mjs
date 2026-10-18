@@ -110,23 +110,7 @@ for (const f of files) {
   }
 }
 
-// Open Graph image (1200x630)
-const ogPath = path.join(root, "public/og.png");
-if (!(await isFresh(path.join(SRC, "hero-bmw.png"), ogPath))) {
-  const car = await sharp(path.join(SRC, "hero-bmw.png")).resize({ width: 1040 }).toBuffer();
-  const logo = await sharp(path.join(SRC, "lad-logo-on-light.png")).resize({ width: 300 }).toBuffer();
-  const text = Buffer.from(`<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-    <text x="600" y="232" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="56" font-weight="300" fill="#0F1512" letter-spacing="-2">Reliable Cars at <tspan font-weight="700" fill="#1A8F3C">Affordable Prices</tspan></text>
-  </svg>`);
-  await sharp({ create: { width: 1200, height: 630, channels: 3, background: "#FFFFFF" } })
-    .composite([
-      { input: logo, top: 28, left: 450 },
-      { input: text, top: 0, left: 0 },
-      { input: car, top: 262, left: 80 },
-    ])
-    .png({ compressionLevel: 9 })
-    .toFile(ogPath);
-}
+// The link-preview image (public/og.png) is made by scripts/make-og.mjs and committed.
 
 await writeFile(
   path.join(root, "src/lib/images.generated.ts"),

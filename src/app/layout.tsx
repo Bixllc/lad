@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     title,
     description: site.description,
     url: "/",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: title }],
+    images: [{ url: "/og.png?v=2", width: 1200, height: 630, alt: title }],
   },
-  twitter: { card: "summary_large_image", title, description: site.description, images: ["/og.png"] },
+  twitter: { card: "summary_large_image", title, description: site.description, images: ["/og.png?v=2"] },
 };
 
 export const viewport: Viewport = { themeColor: "#F6F7F4" };
@@ -37,7 +37,7 @@ const jsonLd = {
   slogan: site.tagline,
   description: site.description,
   url: site.url,
-  image: `${site.url}/og.png`,
+  image: `${site.url}/og.png?v=2`,
   logo: `${site.url}/img/lad-logo-on-light-480.webp`,
   telephone: `+${contact.whatsappNumber}`,
   address: { "@type": "PostalAddress", addressCountry: "JM" },
