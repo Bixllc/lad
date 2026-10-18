@@ -14,14 +14,14 @@ export default function FleetSection() {
         <h2 id="fleet-heading" className="display text-h2 font-normal">
           Our Full <span className="accent">Fleet</span>
         </h2>
-        <div role="group" aria-label="Filter vehicles" className="inline-flex flex-wrap justify-center gap-1 rounded-full border border-ink/6 bg-card p-[5px]">
+        <div role="group" aria-label="Filter vehicles" className="inline-flex flex-wrap justify-center gap-1 rounded-[17px] border border-ink/6 bg-card p-[5px]">
           {fleetFilters.map((f) => (
             <button
               key={f}
               type="button"
               aria-pressed={filter === f}
               onClick={() => setFilter(f)}
-              className={`h-11 cursor-pointer rounded-full px-5 text-sm font-semibold transition-colors ${
+              className={`h-11 cursor-pointer rounded-btn px-5 text-sm font-semibold transition-colors ${
                 filter === f ? "bg-brand-fill text-white" : "text-body hover:bg-ink/5 hover:text-ink"
               }`}
             >
