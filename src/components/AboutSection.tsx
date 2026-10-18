@@ -26,7 +26,7 @@ export default function AboutSection() {
       </div>
       <div className="reveal relative aspect-[4/5] w-full overflow-hidden rounded-[32px]">
         {aboutImage ? (
-          <Img name={aboutImage} alt="The LAD Car Rentals team" sizes="(min-width: 960px) 600px, 100vw" className="size-full object-cover" />
+          <Img name={aboutImage} alt="White Audi A3 with an LAD Car Rentals plate driving down a sunny highway" sizes="(min-width: 1280px) 600px, (min-width: 960px) 46vw, calc(100vw - 40px)" className="size-full object-cover object-[50%_62%]" />
         ) : (
           <Placeholder label="Team or lifestyle photo" />
         )}

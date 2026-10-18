@@ -79,4 +79,4 @@ export const locations = [
 ];
 
 // Set to an image name to replace the About Us photo placeholder.
-export const aboutImage: ImageName | null = null;
+export const aboutImage: ImageName | null = "about-audi-highway";
