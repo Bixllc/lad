@@ -37,7 +37,7 @@ export default function Home() {
       <FleetSection />
 
       {/* Why Drive with LAD */}
-      <section aria-labelledby="why-heading" className="overflow-hidden pt-[clamp(88px,11vw,152px)]">
+      <section aria-labelledby="why-heading" className="overflow-x-clip pt-[clamp(88px,11vw,152px)] pb-8">
         <div className="mx-auto grid max-w-[1280px] grid-cols-[repeat(auto-fit,minmax(min(100%,420px),1fr))] items-center gap-[clamp(32px,5vw,64px)] px-5">
           <div className="reveal flex max-w-[560px] flex-col items-start gap-6">
             <h2 id="why-heading" className="display text-h2-lg font-normal leading-[1.04]">
@@ -60,6 +60,7 @@ export default function Home() {
             name="why-hyundai-grey"
             alt="Grey Hyundai Tucson with an LAD Car Rentals plate"
             sizes="(min-width: 960px) 720px, 110vw"
+            shadow="strong"
             className="reveal -mr-[18%] w-[118%]"
           />
         </div>

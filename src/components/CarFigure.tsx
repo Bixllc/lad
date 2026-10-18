@@ -10,13 +10,15 @@ type Props = {
   className?: string;
   imgClassName?: string;
   style?: CSSProperties;
+  /** "strong" matches the hero car's shadow weight; "soft" suits cards. */
+  shadow?: "soft" | "strong";
 };
 
 /** Car cut-out on a multiply blend with a soft elliptical ground shadow under the tyres. */
-export default function CarFigure({ name, alt, sizes, priority, className = "", imgClassName = "", style }: Props) {
+export default function CarFigure({ name, alt, sizes, priority, className = "", imgClassName = "", style, shadow = "soft" }: Props) {
   return (
     <div className={`relative ${className}`} style={style}>
-      <div aria-hidden="true" className="ground-shadow" />
+      <div aria-hidden="true" className={shadow === "strong" ? "ground-shadow-strong" : "ground-shadow"} />
       <Img
         name={name}
         alt={alt}
