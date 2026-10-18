@@ -7,7 +7,7 @@ export const site = {
   description:
     "Clean, dependable rental cars across Jamaica from a locally owned team. Book on WhatsApp or Instagram — Montego Bay, Kingston, Ocho Rios and Negril.",
   // Production URL, used for canonical links, sitemap and Open Graph. Update before launch.
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://ladcarrentals.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.ladcarrentals.com",
 };
 
 export const contact = {

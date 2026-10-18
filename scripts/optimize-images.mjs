@@ -1,8 +1,9 @@
 // Converts the source PNGs in assets-src/ into responsive WebP files in public/img/
-// and writes src/lib/images.generated.ts (intrinsic sizes for next/image).
+// and writes src/lib/images.generated.ts (intrinsic sizes + a content hash for next/image).
 // Static export can't use Next's on-demand optimizer, so we do it at build time.
 import sharp from "sharp";
-import { readdir, mkdir, stat, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { readdir, mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
@@ -31,7 +32,11 @@ async function emit(name, input, srcPath) {
       .webp({ quality: 78, alphaQuality: 85, effort: 5 })
       .toFile(out);
   }
-  return { width: meta.width, height: meta.height };
+  // Content hash of the generated files, used as ?v= in image URLs so a changed image gets a
+  // new URL (public/img is cached for 30 days, so reusing a URL would keep showing the old one).
+  const hash = createHash("sha1");
+  for (const w of WIDTHS) hash.update(await readFile(path.join(OUT, `${name}-${w}.webp`)));
+  return { width: meta.width, height: meta.height, v: hash.digest("hex").slice(0, 8) };
 }
 
 // Footer logo: recolour the dark wordmark to off-white so it reads on #0A0A0A.
