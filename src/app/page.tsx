@@ -28,7 +28,7 @@ export default function Home() {
               priority
               fetchPriority="high"
               sizes="(min-width: 1160px) 1120px, 100vw"
-              className="relative block h-auto w-full brightness-105 mix-blend-multiply [mask-composite:intersect] [mask-image:linear-gradient(to_bottom,transparent_0,#000_12%,#000_100%),linear-gradient(to_right,transparent_0,#000_6%,#000_94%,transparent_100%)]"
+              className="relative block h-auto w-full"
             />
           </div>
         </div>

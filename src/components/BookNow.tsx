@@ -82,6 +82,9 @@ type PopoverProps = BaseProps & {
   options?: Option[];
   size?: "md" | "lg";
   align?: "start" | "center" | "end";
+  /** Open the menu above the button (e.g. for the floating mobile button). */
+  placement?: "bottom" | "top";
+  buttonClassName?: string;
 };
 
 type InlineProps = BaseProps & {
@@ -112,6 +115,8 @@ function PopoverBook({
   options = DEFAULT_OPTIONS,
   size = "lg",
   align = "center",
+  placement = "bottom",
+  buttonClassName = "",
   className = "",
 }: PopoverProps) {
   const [open, setOpen] = useState(false);
@@ -169,7 +174,7 @@ function PopoverBook({
         aria-controls={open ? menuId : undefined}
         onClick={() => setOpen((o) => !o)}
         onKeyDown={onTriggerKey}
-        className={`inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-btn bg-brand-fill text-white transition-colors hover:bg-brand-hover ${sizeCls}`}
+        className={`inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-btn bg-brand-fill text-white transition-colors hover:bg-brand-hover ${sizeCls} ${buttonClassName}`}
       >
         {label}
         <ChevronDown className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
@@ -177,7 +182,7 @@ function PopoverBook({
 
       {open && (
         <div
-          className={`absolute top-full z-50 pt-3 ${
+          className={`absolute z-50 ${placement === "top" ? "bottom-full pb-3" : "top-full pt-3"} ${
             align === "center"
               ? "left-1/2 w-[280px] -translate-x-1/2"
               : align === "start"
@@ -191,7 +196,13 @@ function PopoverBook({
             aria-labelledby={triggerId}
             onKeyDown={onMenuKey}
             className={`flex animate-pop flex-col gap-1.5 rounded-2xl border border-ink/8 bg-card p-2 shadow-pop ${
-              align === "center" ? "origin-top" : align === "start" ? "origin-top-left" : "origin-top-right"
+              placement === "top"
+                ? "origin-bottom-right"
+                : align === "center"
+                  ? "origin-top"
+                  : align === "start"
+                    ? "origin-top-left"
+                    : "origin-top-right"
             }`}
           >
             {options.map((o, i) => (

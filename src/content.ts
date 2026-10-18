@@ -16,9 +16,8 @@ export const contact = {
 };
 
 export const messages = {
-  general: "Hi LAD Car Rentals! I'd like to rent a car.",
-  car: (car: string) =>
-    `Hi LAD Car Rentals! I'm interested in the ${car}. My pickup location: ___ Dates: ___`,
+  general: "Hey, I'm interested in booking a car.",
+  car: (car: string) => `Hey, I'm interested in booking the ${car}.`,
 };
 
 export const links = {

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import FloatingBookNow from "@/components/FloatingBookNow";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { contact, links, locations, site } from "@/content";
@@ -66,7 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
-        <FloatingWhatsApp />
+        <FloatingBookNow />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>

@@ -48,13 +48,51 @@ async function lightLogo(file) {
   return sharp(data, { raw: info }).png().toBuffer();
 }
 
+// The hero photo has an opaque light-grey studio background. Flood-fill it from the
+// edges and turn it into transparency (keeping its soft floor shadow as translucent
+// black) so the car sits cleanly on any page background, without CSS masks.
+async function cutOutStudioBackground(file) {
+  const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width: w, height: h } = info;
+  const lum = (i) => 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+  // Light, neutral pixels are background. Near the floor (bottom 30%) accept darker greys
+  // too, so the floor shadow fades out smoothly; higher up that would eat body reflections.
+  const floorY = Math.round(h * 0.7);
+  const isBg = (i, y) =>
+    lum(i) > (y >= floorY ? 95 : 165) &&
+    Math.max(data[i], data[i + 1], data[i + 2]) - Math.min(data[i], data[i + 1], data[i + 2]) < 24;
+  const seen = new Uint8Array(w * h);
+  const stack = [];
+  for (let x = 0; x < w; x++) stack.push(x, (h - 1) * w + x);
+  for (let y = 0; y < h; y++) stack.push(y * w, y * w + w - 1);
+  while (stack.length) {
+    const p = stack.pop();
+    if (seen[p]) continue;
+    const i = p * 4;
+    if (!isBg(i, Math.floor(p / w))) continue;
+    seen[p] = 1;
+    const l = lum(i);
+    const a = Math.max(0, Math.min(1, (238 - l) / (238 - 95)));
+    data[i] = data[i + 1] = data[i + 2] = 15;
+    data[i + 3] = Math.round(a * a * 255 * 0.7);
+    const x = p % w;
+    if (x > 0) stack.push(p - 1);
+    if (x < w - 1) stack.push(p + 1);
+    if (p >= w) stack.push(p - w);
+    if (p < w * (h - 1)) stack.push(p + w);
+  }
+  return sharp(data, { raw: info }).png().toBuffer();
+}
+
 const manifest = {};
 const files = (await readdir(SRC)).filter((f) => f.endsWith(".png")).sort();
 for (const f of files) {
   const name = f.replace(/\.png$/, "");
   const srcPath = path.join(SRC, f);
   // Car cut-outs: trim transparent margins so every car fills its card the same way.
-  const input = /^(fleet|why)-/.test(name) ? await sharp(srcPath).trim({ threshold: 10 }).toBuffer() : srcPath;
+  let input = srcPath;
+  if (name === "hero-bmw") input = await sharp(await cutOutStudioBackground(srcPath)).trim({ threshold: 10 }).toBuffer();
+  else if (/^(fleet|why)-/.test(name)) input = await sharp(srcPath).trim({ threshold: 10 }).toBuffer();
   manifest[name] = await emit(name, input, srcPath);
   if (name === "lad-logo-on-light") {
     manifest["lad-logo-on-dark"] = await emit("lad-logo-on-dark", await lightLogo(srcPath), srcPath);
