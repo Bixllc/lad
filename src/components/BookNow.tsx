@@ -81,7 +81,7 @@ type PopoverProps = BaseProps & {
   label?: string;
   options?: Option[];
   size?: "md" | "lg";
-  align?: "center" | "end";
+  align?: "start" | "center" | "end";
 };
 
 type InlineProps = BaseProps & {
@@ -178,7 +178,11 @@ function PopoverBook({
       {open && (
         <div
           className={`absolute top-full z-50 pt-3 ${
-            align === "center" ? "left-1/2 w-[280px] -translate-x-1/2" : "right-0 w-[260px]"
+            align === "center"
+              ? "left-1/2 w-[280px] -translate-x-1/2"
+              : align === "start"
+                ? "left-0 w-[280px]"
+                : "right-0 w-[260px]"
           }`}
         >
           <div
@@ -187,7 +191,7 @@ function PopoverBook({
             aria-labelledby={triggerId}
             onKeyDown={onMenuKey}
             className={`flex animate-pop flex-col gap-1.5 rounded-2xl border border-ink/8 bg-card p-2 shadow-pop ${
-              align === "center" ? "origin-top" : "origin-top-right"
+              align === "center" ? "origin-top" : align === "start" ? "origin-top-left" : "origin-top-right"
             }`}
           >
             {options.map((o, i) => (

@@ -1,4 +1,5 @@
-import { aboutImage, links } from "@/content";
+import { aboutImage } from "@/content";
+import BookNow from "./BookNow";
 import Img from "./Img";
 import Placeholder from "./Placeholder";
 
@@ -21,24 +22,7 @@ export default function AboutSection() {
         <p className="text-[17px] leading-[1.75] text-body">
           Our team believes in honest service, clear communication, and treating every customer like family.
         </p>
-        <div className="mt-2 flex flex-wrap gap-3">
-          <a
-            href={links.instagramDm}
-            target="_blank"
-            rel="noopener"
-            className="inline-flex h-14 items-center justify-center rounded-btn bg-ink px-7 text-[15px] font-bold text-white transition-colors hover:bg-brand-fill"
-          >
-            Message us on Instagram
-          </a>
-          <a
-            href={links.whatsapp()}
-            target="_blank"
-            rel="noopener"
-            className="inline-flex h-14 items-center justify-center rounded-btn border border-line bg-white px-7 text-[15px] font-bold text-ink transition-colors hover:border-brand hover:text-brand-fill"
-          >
-            WhatsApp Us
-          </a>
-        </div>
+        <BookNow label="Learn More" align="start" className="mt-2" />
       </div>
       <div className="reveal relative aspect-[4/5] w-full overflow-hidden rounded-[32px]">
         {aboutImage ? (
