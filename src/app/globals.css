@@ -83,6 +83,10 @@
     font-weight: 700;
     color: var(--color-brand);
   }
+  /* In-page nav target: offsets the section's top padding so the heading lands just under the sticky header. */
+  .anchor {
+    scroll-margin-top: calc(8rem - clamp(88px, 11vw, 152px));
+  }
   .ground-shadow {
     position: absolute;
     left: 10%;

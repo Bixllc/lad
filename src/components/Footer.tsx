@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { links, nav, site } from "@/content";
 import BookNow from "./BookNow";
 import Img from "./Img";
@@ -13,9 +12,9 @@ export default function Footer() {
       <div className="mx-auto max-w-[1280px] rounded-panel bg-footer px-[clamp(24px,4vw,56px)] pt-[clamp(40px,6vw,64px)] pb-7 text-[#F8F9FA]">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,220px),1fr))] items-start gap-9">
           <div className="flex flex-col gap-3.5">
-            <Link href="/" aria-label="LAD Car Rentals home" className="w-fit">
+            <a href="#home" aria-label="LAD Car Rentals home" className="w-fit">
               <Img name="lad-logo-on-dark" alt="LAD Car Rentals" sizes="200px" className="h-auto w-[200px]" />
-            </Link>
+            </a>
             <div className="flex gap-2.5">
               <a
                 href={links.whatsapp()}
@@ -42,13 +41,13 @@ export default function Footer() {
 
           <nav aria-label="Footer" className="flex flex-col gap-1">
             {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
+              <a
+                key={item.id}
+                href={`#${item.id}`}
                 className="w-fit py-1.5 text-[15px] text-footer-text transition-colors hover:text-footer-accent"
               >
                 {item.label}
-              </Link>
+              </a>
             ))}
           </nav>
 

@@ -30,11 +30,12 @@ export const links = {
   instagramProfile: `https://www.instagram.com/${contact.instagramHandle}/`,
 };
 
+// One-page site: each nav item scrolls to a section id on the home page.
 export const nav = [
-  { href: "/", label: "Home" },
-  { href: "/fleet/", label: "Our Fleet" },
-  { href: "/locations/", label: "Locations" },
-  { href: "/about/", label: "About Us" },
+  { id: "home", label: "Home" },
+  { id: "fleet", label: "Our Fleet" },
+  { id: "locations", label: "Locations" },
+  { id: "about", label: "About Us" },
 ];
 
 export type CarType = "Sedan" | "SUV" | "Hatchback";
@@ -72,9 +73,13 @@ export function carGroup(type: CarType): Exclude<FleetFilter, "All"> {
   return type === "SUV" ? "SUVs" : "Cars";
 }
 
-export const locations = [
+// Add `image: "<name>"` (a PNG in assets-src/) to replace a placeholder with a photo.
+export const locations: { city: string; parish: string; image?: ImageName }[] = [
   { city: "Montego Bay", parish: "St. James" },
   { city: "Kingston", parish: "Kingston & St. Andrew" },
   { city: "Ocho Rios", parish: "St. Ann" },
   { city: "Negril", parish: "Westmoreland" },
 ];
+
+// Set to an image name to replace the About Us photo placeholder.
+export const aboutImage: ImageName | null = null;
