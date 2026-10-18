@@ -1,6 +1,7 @@
 import BookNow from "@/components/BookNow";
 import CarFigure from "@/components/CarFigure";
 import FleetSection from "@/components/FleetSection";
+import Img from "@/components/Img";
 import AboutSection from "@/components/AboutSection";
 import { links } from "@/content";
 
@@ -8,7 +9,7 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section id="home" aria-label="Introduction" className="relative scroll-mt-28 overflow-x-clip bg-[radial-gradient(ellipse_75%_50%_at_50%_62%,#E6E9E5_0%,#F6F7F4_72%)]">
+      <section id="home" aria-label="Introduction" className="relative scroll-mt-28 bg-[radial-gradient(ellipse_75%_65%_at_50%_62%,#E6E9E5_0%,#F6F7F4_72%)]">
         <div className="mx-auto flex max-w-[1280px] flex-col items-center px-5 pt-[clamp(56px,9vw,120px)] pb-[clamp(40px,5vw,64px)] text-center">
           <h1 className="display text-hero">
             Reliable Cars at
@@ -19,14 +20,17 @@ export default function Home() {
           </p>
           <BookNow className="z-20 mt-9" />
 
-          <CarFigure
-            name="hero-bmw"
-            alt="Black BMW sedan from the LAD Car Rentals fleet"
-            priority
-            sizes="(min-width: 1160px) 1120px, 100vw"
-            shadow="grounded"
-            className="mt-[clamp(32px,5vw,64px)] mb-6 w-full max-w-[1120px]"
-          />
+          <div className="relative mt-[clamp(24px,4vw,48px)] w-full max-w-[1120px]">
+            <div aria-hidden="true" className="ground-shadow" />
+            <Img
+              name="hero-bmw"
+              alt="Black BMW sedan from the LAD Car Rentals fleet"
+              priority
+              fetchPriority="high"
+              sizes="(min-width: 1160px) 1120px, 100vw"
+              className="relative block h-auto w-full brightness-105 mix-blend-multiply [mask-composite:intersect] [mask-image:linear-gradient(to_bottom,transparent_0,#000_12%,#000_100%),linear-gradient(to_right,transparent_0,#000_6%,#000_94%,transparent_100%)]"
+            />
+          </div>
         </div>
       </section>
 

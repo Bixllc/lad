@@ -55,7 +55,7 @@ for (const f of files) {
   const srcPath = path.join(SRC, f);
   // Car cut-outs: trim transparent margins so every car fills its card the same way.
   let input = srcPath;
-  if (/^(fleet|why|hero)-/.test(name)) input = await sharp(srcPath).trim({ threshold: 10 }).toBuffer();
+  if (/^(fleet|why)-/.test(name)) input = await sharp(srcPath).trim({ threshold: 10 }).toBuffer();
   manifest[name] = await emit(name, input, srcPath);
   if (name === "lad-logo-on-light") {
     manifest["lad-logo-on-dark"] = await emit("lad-logo-on-dark", await lightLogo(srcPath), srcPath);
