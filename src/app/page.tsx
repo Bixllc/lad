@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section id="home" aria-label="Introduction" className="relative scroll-mt-28 bg-[radial-gradient(ellipse_75%_65%_at_50%_62%,#E6E9E5_0%,#F6F7F4_72%)]">
+      <section id="home" aria-label="Introduction" className="relative scroll-mt-28 bg-[radial-gradient(ellipse_75%_50%_at_50%_62%,#E6E9E5_0%,#F6F7F4_72%)]">
         <div className="mx-auto flex max-w-[1280px] flex-col items-center px-5 pt-[clamp(56px,9vw,120px)] pb-[clamp(40px,5vw,64px)] text-center">
           <h1 className="display text-hero">
             Reliable Cars at
@@ -28,7 +28,8 @@ export default function Home() {
               priority
               fetchPriority="high"
               sizes="(min-width: 1160px) 1120px, 100vw"
-              className="relative block h-auto w-full brightness-105 mix-blend-multiply [mask-composite:intersect] [mask-image:linear-gradient(to_bottom,transparent_0,#000_12%,#000_100%),linear-gradient(to_right,transparent_0,#000_6%,#000_94%,transparent_100%)]"
+              // Background blend + edge fade are baked into the image (scripts/optimize-images.mjs)
+              className="relative block h-auto w-full"
             />
           </div>
         </div>

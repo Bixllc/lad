@@ -48,6 +48,53 @@ async function lightLogo(file) {
   return sharp(data, { raw: info }).png().toBuffer();
 }
 
+// The hero photo has an opaque light-grey studio background (floor, soft shadow). The design
+// blended it onto the page with CSS (mix-blend-mode: multiply + edge masks), but that renders
+// as a visible box on iOS Safari. Bake the same result into the PNG instead:
+// - studio background (flood-filled from the edges) becomes black at alpha = 1 - brightness,
+//   which over any page colour looks exactly like a multiply blend, so floor + shadow survive;
+// - the car itself stays opaque;
+// - edges fade out like the original CSS mask (top 12%, sides 6%).
+async function blendStudioBackground(file) {
+  const { data, info } = await sharp(file).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width: w, height: h } = info;
+  const lum = (i) => 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+  // Light, neutral pixels are background. Near the floor (bottom 30%) accept darker greys
+  // too, so the floor shadow is included; higher up that would eat body reflections.
+  const floorY = Math.round(h * 0.7);
+  const isBg = (i, y) =>
+    lum(i) > (y >= floorY ? 95 : 165) &&
+    Math.max(data[i], data[i + 1], data[i + 2]) - Math.min(data[i], data[i + 1], data[i + 2]) < 24;
+  const bg = new Uint8Array(w * h);
+  const stack = [];
+  for (let x = 0; x < w; x++) stack.push(x, (h - 1) * w + x);
+  for (let y = 0; y < h; y++) stack.push(y * w, y * w + w - 1);
+  while (stack.length) {
+    const p = stack.pop();
+    if (bg[p] || !isBg(p * 4, Math.floor(p / w))) continue;
+    bg[p] = 1;
+    const x = p % w;
+    if (x > 0) stack.push(p - 1);
+    if (x < w - 1) stack.push(p + 1);
+    if (p >= w) stack.push(p - w);
+    if (p < w * (h - 1)) stack.push(p + w);
+  }
+  const ramp = (t, edge) => Math.min(1, t / edge);
+  for (let p = 0; p < w * h; p++) {
+    const i = p * 4;
+    const x = p % w;
+    const y = Math.floor(p / w);
+    let a = 1;
+    if (bg[p]) {
+      a = 1 - Math.min(1, (lum(i) * 1.05) / 255); // 1.05 = the design's brightness(1.05)
+      data[i] = data[i + 1] = data[i + 2] = 0;
+    }
+    a *= ramp(y / h, 0.12) * ramp(x / w, 0.06) * ramp((w - 1 - x) / w, 0.06);
+    data[i + 3] = Math.round(a * 255);
+  }
+  return sharp(data, { raw: info }).png().toBuffer();
+}
+
 const manifest = {};
 const files = (await readdir(SRC)).filter((f) => f.endsWith(".png")).sort();
 for (const f of files) {
@@ -55,7 +102,8 @@ for (const f of files) {
   const srcPath = path.join(SRC, f);
   // Car cut-outs: trim transparent margins so every car fills its card the same way.
   let input = srcPath;
-  if (/^(fleet|why)-/.test(name)) input = await sharp(srcPath).trim({ threshold: 10 }).toBuffer();
+  if (name === "hero-bmw") input = await blendStudioBackground(srcPath);
+  else if (/^(fleet|why)-/.test(name)) input = await sharp(srcPath).trim({ threshold: 10 }).toBuffer();
   manifest[name] = await emit(name, input, srcPath);
   if (name === "lad-logo-on-light") {
     manifest["lad-logo-on-dark"] = await emit("lad-logo-on-dark", await lightLogo(srcPath), srcPath);
